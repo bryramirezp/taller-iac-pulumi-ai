@@ -316,15 +316,7 @@ pulumi_iac_aws/
 ├── website/
 │   └── index.html         # Pagina HTML que se sube al bucket S3
 │
-├── aws_free_tier.json     # Referencia: limites del Free Tier de AWS
-├── PLAN.md                # Plan y documentacion del taller
-│
-└── slides/                # Material visual de la presentacion
-    ├── outline.md         # Estructura y notas del presentador
-    ├── slide1.html        # ¿Que es la infraestructura?
-    ├── slide2.html        # ClickOps vs IaC
-    ├── slide3.html        # ¿Que es Pulumi?
-    └── slide4.html        # AI + IaC
+└── aws_free_tier.json     # Referencia: limites del Free Tier de AWS
 ```
 
 ---
