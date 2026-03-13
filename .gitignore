@@ -22,6 +22,11 @@ env/
 Thumbs.db
 desktop.ini
 
+# Slides y material de presentación (solo uso local)
+slides/
+Template_SCDMX2026.pptx
+PLAN.md
+
 # Secrets / credentials
 .env
 *.pem
