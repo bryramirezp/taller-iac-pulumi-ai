@@ -1,0 +1,7 @@
+name: pulumi-iac-taller
+runtime: python
+description: >
+  Taller de Infraestructura como Código con Pulumi + AI.
+  Demuestra cómo desplegar un S3 static website y una Lambda + API Gateway
+  en AWS usando Python y OpenCode como asistente de IA.
+  Fecha: 14 de marzo de 2026.

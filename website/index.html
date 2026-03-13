@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller Pulumi IaC + AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f1a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 720px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1e3a5f;
+      color: #63b3ed;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid #2b6cb0;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #63b3ed, #9f7aea, #f687b3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #a0aec0;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #68d391;
+      font-weight: 600;
+    }
+
+    .stack {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .tag {
+      background: #1a202c;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #cbd5e0;
+    }
+
+    .tag span {
+      margin-right: 6px;
+    }
+
+    .card {
+      background: #1a202c;
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #63b3ed;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #a0aec0;
+      line-height: 1.6;
+    }
+
+    .success-banner {
+      background: linear-gradient(135deg, #1a3a2a, #1a2a3a);
+      border: 1px solid #38a169;
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .success-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .success-text h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #68d391;
+      margin-bottom: 4px;
+    }
+
+    .success-text p {
+      font-size: 14px;
+      color: #9ae6b4;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #4a5568;
+    }
+
+    .footer a {
+      color: #63b3ed;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .pulumi-logo {
+      font-size: 13px;
+      color: #4a5568;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="badge">Desplegado con Pulumi + AWS S3</div>
+
+    <h1>Infraestructura<br/>como Código</h1>
+
+    <p class="subtitle">
+      Esta pagina fue creada automaticamente usando
+      <span class="highlight">Pulumi</span>,
+      <span class="highlight">Python</span> y
+      <span class="highlight">OpenCode AI</span>
+      &mdash; sin tocar la consola de AWS.
+    </p>
+
+    <div class="success-banner">
+      <div class="success-icon">✓</div>
+      <div class="success-text">
+        <h2>Demo 1 completada exitosamente</h2>
+        <p>Bucket S3 creado, configurado como sitio web estatico y desplegado en segundos.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="tag"><span>🐍</span> Python</div>
+      <div class="tag"><span>⚡</span> Pulumi</div>
+      <div class="tag"><span>☁️</span> AWS S3</div>
+      <div class="tag"><span>🤖</span> OpenCode AI</div>
+    </div>
+
+    <div class="card">
+      <h3>¿Que acaba de pasar?</h3>
+      <p>
+        Con menos de 50 lineas de Python y un solo comando
+        <code style="background:#2d3748; padding:2px 6px; border-radius:4px; font-size:13px;">pulumi up</code>,
+        se creo un bucket S3, se configuro como sitio web publico,
+        se subio este HTML y se establecieron los permisos correctos en AWS.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Proxima demo</h3>
+      <p>
+        Demo 2: crear una funcion <strong style="color:#f6ad55;">AWS Lambda</strong> con
+        <strong style="color:#f6ad55;">API Gateway</strong> para exponer
+        una API HTTP &mdash; todo con codigo, todo automatizado.
+      </p>
+    </div>
+
+    <div class="footer">
+      Taller &middot; 14 de marzo de 2026 &middot;
+      <a href="https://www.pulumi.com/docs/" target="_blank">Pulumi Docs</a> &middot;
+      <a href="https://opencode.ai" target="_blank">OpenCode</a>
+      <div class="pulumi-logo">
+        Infraestructura gestionada por Pulumi &mdash; stack: dev &mdash; region: us-east-1
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

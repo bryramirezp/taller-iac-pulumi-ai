@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "description": "Alcance del AWS Free Tier para los servicios utilizados en el taller de Pulumi IaC",
+    "fecha_actualizacion": "2026-03-07",
+    "fuentes": [
+      "https://aws.amazon.com/free/",
+      "https://aws.amazon.com/s3/pricing/",
+      "https://aws.amazon.com/lambda/pricing/",
+      "https://aws.amazon.com/api-gateway/pricing/"
+    ],
+    "nota_importante": "A partir del 15 de julio de 2025, AWS cambió su modelo de Free Tier. Las cuentas nuevas reciben hasta $200 USD en créditos. Las cuentas creadas antes de esa fecha mantienen el modelo legacy. Este taller opera dentro de los límites descritos abajo para ambos modelos.",
+    "region_recomendada": "us-east-1"
+  },
+  "free_tier_tipos": {
+    "always_free": {
+      "descripcion": "Límites que NO expiran. Disponibles indefinidamente para todas las cuentas de AWS.",
+      "servicios": ["AWS Lambda", "AWS IAM"]
+    },
+    "12_meses": {
+      "descripcion": "Disponible durante los primeros 12 meses desde la creación de la cuenta AWS.",
+      "servicios": ["Amazon S3", "Amazon API Gateway", "Amazon CloudWatch Logs"]
+    },
+    "creditos_nuevas_cuentas": {
+      "descripcion": "A partir del 15 julio 2025, cuentas nuevas reciben $100 USD al registrarse + hasta $100 USD adicionales explorando servicios clave.",
+      "duracion": "6 meses en el Free Plan (sin cobros), o hasta agotar créditos en Paid Plan"
+    }
+  },
+  "servicios": {
+    "amazon_s3": {
+      "nombre": "Amazon S3 (Simple Storage Service)",
+      "tipo_free_tier": "12 meses",
+      "uso_en_taller": "Demo 1 - Website estática (bucket + index.html público)",
+      "limites_free_tier": {
+        "almacenamiento": {
+          "cantidad": "5 GB",
+          "clase": "S3 Standard",
+          "periodo": "mensual"
+        },
+        "solicitudes_get": {
+          "cantidad": 20000,
+          "descripcion": "GET, SELECT y otras solicitudes de lectura",
+          "periodo": "mensual"
+        },
+        "solicitudes_put": {
+          "cantidad": 2000,
+          "descripcion": "PUT, COPY, POST, LIST (escritura/subida de objetos)",
+          "periodo": "mensual"
+        },
+        "transferencia_datos_salida": {
+          "cantidad": "100 GB",
+          "descripcion": "Compartido entre todos los servicios de AWS en la cuenta",
+          "periodo": "mensual"
+        }
+      },
+      "uso_estimado_taller": {
+        "almacenamiento": "< 1 MB (solo un index.html)",
+        "solicitudes_put": "~10 (bucket + configuraciones + upload del HTML)",
+        "solicitudes_get": "< 100 (visitas al sitio durante la demo)",
+        "transferencia": "< 1 MB",
+        "costo_estimado": "$0.00"
+      },
+      "recursos_creados_en_taller": [
+        "BucketV2 (el bucket principal)",
+        "BucketWebsiteConfigurationV2 (habilita hosting estático)",
+        "BucketPublicAccessBlock (permite acceso público)",
+        "BucketOwnershipControls (configuración de ownership)",
+        "BucketAclV2 (ACL pública)",
+        "BucketObject (sube el index.html)",
+        "BucketPolicy (política de lectura pública)"
+      ],
+      "advertencias": [
+        "El bucket estático NO tiene CloudFront: la URL será HTTP, no HTTPS",
+        "Hacer pulumi destroy al terminar para evitar costos mínimos de almacenamiento",
+        "No subir archivos grandes (videos, imágenes pesadas) durante el taller"
+      ]
+    },
+    "aws_lambda": {
+      "nombre": "AWS Lambda",
+      "tipo_free_tier": "Always Free (no expira)",
+      "uso_en_taller": "Demo 2 - Función serverless que responde con JSON vía API",
+      "limites_free_tier": {
+        "solicitudes": {
+          "cantidad": 1000000,
+          "descripcion": "1 millón de invocaciones gratuitas por mes",
+          "periodo": "mensual",
+          "aplica_a": "Funciones x86 y Graviton2/ARM en conjunto"
+        },
+        "compute_time": {
+          "cantidad": "400,000 GB-segundos",
+          "descripcion": "Tiempo de cómputo gratuito por mes (memoria × duración)",
+          "periodo": "mensual",
+          "ejemplo": "Con 128 MB de memoria: ~3,200,000 segundos de ejecución gratuitos"
+        },
+        "response_streaming": {
+          "cantidad": "100 GiB",
+          "descripcion": "Streaming HTTP gratuito (más los primeros 6 MB por solicitud)",
+          "periodo": "mensual"
+        }
+      },
+      "uso_estimado_taller": {
+        "solicitudes": "< 50 (pruebas manuales durante la demo)",
+        "duracion_por_invocacion_ms": "< 200 ms",
+        "memoria_configurada": "128 MB",
+        "gb_segundos_usados": "< 2",
+        "costo_estimado": "$0.00"
+      },
+      "recursos_creados_en_taller": [
+        "aws.iam.Role (rol de ejecución para Lambda)",
+        "aws.iam.RolePolicyAttachment (permisos básicos: AWSLambdaBasicExecutionRole)",
+        "aws.lambda_.Function (la función Python que devuelve JSON)"
+      ],
+      "configuracion_recomendada": {
+        "runtime": "python3.12",
+        "memoria_mb": 128,
+        "timeout_segundos": 10,
+        "arquitectura": "x86_64"
+      },
+      "advertencias": [
+        "Lambda es Always Free: no hay urgencia de destruirlo, pero se destruye igual por limpieza",
+        "Los logs de Lambda van a CloudWatch Logs (también tiene free tier)"
+      ]
+    },
+    "amazon_api_gateway": {
+      "nombre": "Amazon API Gateway (HTTP API v2)",
+      "tipo_free_tier": "12 meses",
+      "uso_en_taller": "Demo 2 - Expone la función Lambda como endpoint HTTP público",
+      "tipo_api_usado": "HTTP API (API Gateway v2) - más barato y simple que REST API",
+      "limites_free_tier": {
+        "llamadas_http_api": {
+          "cantidad": 1000000,
+          "descripcion": "1 millón de llamadas a HTTP APIs por mes",
+          "periodo": "mensual"
+        },
+        "llamadas_rest_api": {
+          "cantidad": 1000000,
+          "descripcion": "1 millón de llamadas a REST APIs por mes (no se usa en el taller)",
+          "periodo": "mensual"
+        },
+        "websocket_mensajes": {
+          "cantidad": 1000000,
+          "descripcion": "1 millón de mensajes WebSocket por mes (no aplica al taller)",
+          "periodo": "mensual"
+        },
+        "websocket_minutos_conexion": {
+          "cantidad": 750000,
+          "descripcion": "750,000 minutos de conexión WebSocket por mes (no aplica)",
+          "periodo": "mensual"
+        }
+      },
+      "uso_estimado_taller": {
+        "llamadas": "< 50 (pruebas manuales durante la demo)",
+        "costo_estimado": "$0.00"
+      },
+      "recursos_creados_en_taller": [
+        "aws.apigatewayv2.Api (HTTP API)",
+        "aws.apigatewayv2.Integration (conecta API con Lambda)",
+        "aws.apigatewayv2.Route (ruta GET /)",
+        "aws.apigatewayv2.Stage (stage $default con auto-deploy)",
+        "aws.lambda_.Permission (permite que API GW invoque Lambda)"
+      ],
+      "advertencias": [
+        "El free tier de API Gateway aplica solo durante los primeros 12 meses",
+        "Usar HTTP API (v2) en lugar de REST API: es más barato y más simple de configurar"
+      ]
+    },
+    "aws_iam": {
+      "nombre": "AWS IAM (Identity and Access Management)",
+      "tipo_free_tier": "Always Free (no tiene costo, nunca)",
+      "uso_en_taller": "Crear el rol de ejecución para la función Lambda",
+      "limites_free_tier": {
+        "descripcion": "IAM no tiene costos. Crear usuarios, roles y políticas es completamente gratuito.",
+        "sin_limite": true
+      },
+      "recursos_creados_en_taller": [
+        "aws.iam.Role (rol lambda-execution-role)",
+        "aws.iam.RolePolicyAttachment (adjunta AWSLambdaBasicExecutionRole)"
+      ]
+    },
+    "amazon_cloudwatch_logs": {
+      "nombre": "Amazon CloudWatch Logs",
+      "tipo_free_tier": "12 meses",
+      "uso_en_taller": "Lambda escribe logs automáticamente aquí (no se crea explícitamente)",
+      "limites_free_tier": {
+        "ingesta_logs": {
+          "cantidad": "5 GB",
+          "descripcion": "Ingesta de datos de logs por mes",
+          "periodo": "mensual"
+        },
+        "almacenamiento_logs": {
+          "cantidad": "5 GB",
+          "descripcion": "Almacenamiento de datos de logs por mes",
+          "periodo": "mensual"
+        }
+      },
+      "uso_estimado_taller": {
+        "logs_generados": "< 1 KB (unas pocas invocaciones de prueba)",
+        "costo_estimado": "$0.00"
+      },
+      "advertencias": [
+        "Los log groups de Lambda se crean automáticamente al invocar la función",
+        "No es necesario crear CloudWatch explícitamente en el código Pulumi del taller"
+      ]
+    }
+  },
+  "resumen_taller": {
+    "costo_total_estimado": "$0.00",
+    "condicion": "Siempre que se ejecute pulumi destroy al finalizar el taller",
+    "servicios_usados": ["Amazon S3", "AWS Lambda", "Amazon API Gateway (HTTP API)", "AWS IAM", "Amazon CloudWatch Logs"],
+    "recursos_totales_creados": 15,
+    "tiempo_estimado_pulumi_up": "60-90 segundos",
+    "tiempo_estimado_pulumi_destroy": "30-60 segundos"
+  },
+  "checklist_costos_taller": {
+    "antes": [
+      "Verificar que la cuenta AWS tiene el free tier activo (aws sts get-caller-identity)",
+      "Confirmar región us-east-1 para todos los recursos",
+      "No tener recursos previos del mismo nombre en la cuenta"
+    ],
+    "durante": [
+      "Usar solo los recursos listados en este archivo",
+      "No subir archivos grandes al bucket S3",
+      "Limitar las invocaciones de prueba a la Lambda (< 100)"
+    ],
+    "despues": [
+      "Ejecutar 'pulumi destroy' para eliminar TODOS los recursos",
+      "Verificar en la consola de AWS que no quedaron recursos huérfanos",
+      "Revisar AWS Cost Explorer si hay dudas sobre cargos"
+    ]
+  }
+}
