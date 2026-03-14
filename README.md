@@ -137,7 +137,19 @@ Al abrir OpenCode por primera vez, necesitas configurar un proveedor de LLM. La 
 
 ### Paso 5: Configurar AWS CLI
 
-Necesitas credenciales de AWS (Access Key ID y Secret Access Key). Si no tienes unas, crealas desde la [consola de IAM de AWS](https://console.aws.amazon.com/iam/).
+Necesitas credenciales de AWS (Access Key ID y Secret Access Key). Si no tienes unas, sigue estos pasos para crearlas:
+
+1. Inicia sesión en la Consola de Administración de AWS (https://aws.amazon.com/console/).
+2. En la esquina superior derecha, haz clic en tu nombre de usuario (o nombre de la cuenta).
+3. Selecciona Security Credentials (Credenciales de seguridad) en el menú desplegable.
+4. En la página que se abre, desplázate hacia abajo hasta la sección Access keys (Claves de acceso).
+5. Haz clic en el botón Create access key (Crear clave de acceso).
+6. Te aparecerá una advertencia sobre alternativas a las claves de acceso a largo plazo, selecciona la opción para Command Line Interface (CLI) (o simplemente acepta y continúa si te da la opción directa de crearlas).
+7. (Opcional) Puedes añadir una etiqueta descriptiva, como `pulumi-dev`.
+8. Haz clic en Create access key.
+9. ¡IMPORTANTE! En la siguiente pantalla verás tu Access key ID y tu Secret access key. Cópialos y guárdalos en un lugar seguro, o descarga el archivo .csv. Una vez que cierres esta ventana, no podrás volver a ver el Secret Key (si lo pierdes, tendrás que crear uno nuevo).
+
+Una vez que tengas tus claves, ejecuta el siguiente comando en tu terminal:
 
 ```bash
 aws configure
